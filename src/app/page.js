@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Home() {
   const [inputCardNumber, setInputCardNumber] = useState("");
@@ -207,7 +208,7 @@ export default function Home() {
         ) : (
           <div className="mt-[50px] flex justify-center laptop:w-1/2 laptop:m-0">
             <div className="flex flex-col h-[250px] items-center justify-between w-[90%] laptop:w-[70%]">
-              <img
+              <Image
                 className="w-[80px]"
                 src="/images/icon-complete.svg"
                 alt="centang"
