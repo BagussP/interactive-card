@@ -67,7 +67,7 @@ export default function Home() {
 
   const submit = () => {
     if (inputName == false || inputName.charAt(0) == " " ) {
-      alert("Ga boleh kosong bro atau huruf depannya spasi");
+      alert("Namanya ga boleh kosong bro atau huruf depannya spasi");
     } else if (inputCardNumber.length < 16) {
       alert("Panjang card numbernya harus 16 bro");
     } else if (selectedMonth == "") {
