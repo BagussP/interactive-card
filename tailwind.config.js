@@ -8,10 +8,17 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'mobile' : "url('../../public/images/bg-main-mobile.png')",
+        'desktop' : "url('../../public/images/bg-main-desktop.png')",
+        'card-front' : "url('../../public/images/bg-card-front.png')",
+        'card-back' : "url('../../public/images/bg-card-back.png')",
       },
+      colors : {
+        "Very-dark-violet": "hsl(278, 68%, 11%)"
+      },
+      screens : {
+        "laptop" : "1024px"
+      }
     },
   },
   plugins: [],

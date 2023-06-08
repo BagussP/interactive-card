@@ -1,113 +1,231 @@
-import Image from 'next/image'
+"use client";
+
+import { useState } from "react";
 
 export default function Home() {
+  const [inputCardNumber, setInputCardNumber] = useState("");
+  const [inputCvc, setInputCvc] = useState("");
+  const [inputName, setInputName] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const currentYear = new Date().getFullYear();
+  const [isHidden, setIsHidden] = useState(false);
+  const monthOptions = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    10,
+    11,
+    12,
+  ];
+
+  const handleInputCardNumber = (event) => {
+    const { value } = event.target;
+    let newValue = value.replace(/\D/g, ""); // Hanya mengizinkan angka
+
+    setInputCardNumber(newValue);
+  };
+
+  const formatNumber = (value) => {
+    const formattedValue = value.replace(/\s/g, "").match(/.{1,4}/g);
+    return formattedValue ? formattedValue.join(" ") : "";
+  };
+
+  const handleInputCvc = (event) => {
+    const { value } = event.target;
+    const newValue = value.replace(/[^0-9]/g, ""); // Hanya mengizinkan angka
+
+    setInputCvc(newValue);
+  };
+
+  const handleInputName = (event) => {
+    const { value } = event.target;
+    const newValue = value.replace(/[^a-zA-Z\s]/g, ""); // Hanya mengizinkan angka
+
+    setInputName(newValue);
+  };
+
+  const yearOptions = Array.from(
+    { length: 5 },
+    (_, index) => currentYear + index
+  );
+
+  const handleYearChange = (event) => {
+    setSelectedYear(event.target.value);
+  };
+
+  const handleMonthChange = (event) => {
+    setSelectedMonth(event.target.value);
+  };
+
+  const submit = () => {
+    // if (inputName == false || inputName.charAt(0) == " " ) {
+    //   alert("Ga boleh kosong bro atau huruf depannya spasi");
+    // } else if (inputCardNumber.length < 16) {
+    //   alert("Panjang card numbernya harus 16 bro");
+    // } else if (selectedMonth == "") {
+    //   alert("Bulannya diisi dulu dong bro");
+    // } else if (selectedYear == "") {
+    //   alert("Tahunnya diisi dulu dong bro");
+    // } else if (inputCvc.length < 3) {
+    //   alert("Panjang cvcnya harus 3 bro");
+    // } else {
+    setIsHidden(!isHidden);
+    // }
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div>
+      <div className="bg-mobile bg-no-repeat bg-[length:100%] h-[200px] w-screen absolute -z-10 laptop:bg-desktop laptop:bg-[length:30%_100%] laptop:h-screen "></div>
+      <div className="laptop:flex laptop:items-center laptop:justify-around h-screen">
+        <div className="flex flex-col laptop:flex-col-reverse laptop:gap-10 laptop:w-1/2">
+          <div className="flex justify-end text-white items-center text-sm bg-card-back bg-contain bg-no-repeat h-[125px] w-[228px] mr-4 mt-7 self-end laptop:m-0 laptop:h-[180px] laptop:w-[328px] ">
+            <p className="mr-7 laptop:mr-9 laptop:text-[18px] -mt-1">
+              {inputCvc == "" ? "000" : inputCvc}
+            </p>
+          </div>
+          <div className="flex flex-col justify-between bg-card-front bg-contain box-border p-3 bg-no-repeat h-[125px] w-[228px] ml-4 mt-[-55px] laptop:m-0 laptop:h-[180px] laptop:w-[328px] laptop:ml-20">
+            <div className="flex items-center">
+              <div className="bg-white w-6 h-6 rounded-full laptop:w-10 laptop:h-10"></div>
+              <div className="border-white border-[1px] w-3.5 h-3.5 rounded-full ml-3 laptop:w-5 laptop:h-5 laptop:ml-5"></div>
+            </div>
+            <div>
+              <p className="text-white text-[20px] laptop:text-[30px] laptop:mb-[16px]">
+                {inputCardNumber == ""
+                  ? "0000 0000 0000 0000"
+                  : formatNumber(inputCardNumber)}
+              </p>
+              <div className="flex text-[14px] text-white justify-between laptop:text-[17px]">
+                <p className="max-w-[145px] laptop:text-[]">
+                  {inputName ? inputName : "Jane Appleseed"}
+                </p>
+                <p>{`${selectedMonth ? selectedMonth : "00"}/${
+                  selectedYear ? selectedYear : "00"
+                }`}</p>
+              </div>
+            </div>
+          </div>
         </div>
+
+        {!isHidden ? (
+          <div className="mt-[50px] flex justify-center laptop:w-1/2 laptop:m-0">
+            <form
+              action=""
+              className="flex flex-col h-[250px] justify-between w-[90%] laptop:w-[70%]"
+            >
+              <div>
+                <label htmlFor="name" className="block">
+                  CARDHOLDER NAME
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  className="border-black border-[1px] pl-3 box-border h-8 w-full border-opacity-50"
+                  placeholder="e.g. Jane Appleseed"
+                  value={inputName}
+                  onChange={handleInputName}
+                  maxLength={20}
+                />
+              </div>
+              <div>
+                <label htmlFor="number" className="block">
+                  CARD NUMBER
+                </label>
+                <input
+                  id="number"
+                  type="text"
+                  className="border-black border-[1px] pl-3 box-border h-8 w-full border-opacity-50"
+                  placeholder="e.g. 1234 5678 9123 0000"
+                  value={inputCardNumber}
+                  onChange={handleInputCardNumber}
+                  maxLength={16}
+                />
+              </div>
+              <div className="flex justify-between">
+                <div className="w-1/2">
+                  <label htmlFor="month" className="block">
+                    EXP. DATE (MM/YY)
+                  </label>
+                  <div className="flex justify-between">
+                    <select
+                      className="border-[1px] border-opacity-50 h-8 w-[45%] border-black"
+                      id="month"
+                      value={selectedMonth}
+                      onChange={handleMonthChange}
+                    >
+                      <option value="">Month</option>
+                      {monthOptions.map((month) => (
+                        <option key={month} value={month}>
+                          {month}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      className="border-[1px] border-opacity-50 h-8 w-[45%] border-black"
+                      id="year"
+                      value={selectedYear}
+                      onChange={handleYearChange}
+                    >
+                      <option value="">Year</option>
+                      {yearOptions.map((year) => (
+                        <option key={year} value={year - 2000}>
+                          {year}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="flex flex-col w-[45%]">
+                  <label htmlFor="cvc" className="block">
+                    CVC
+                  </label>
+                  <input
+                    id="cvc"
+                    type="text"
+                    className="border-black border-[1px] pl-3 box-border h-8 w-[100%] float-right border-opacity-50"
+                    placeholder="e.g. 123"
+                    value={inputCvc}
+                    onChange={handleInputCvc}
+                    maxLength={3}
+                  />
+                </div>
+              </div>
+              <button
+                onClick={submit}
+                className="w-full h-10 text-white bg-Very-dark-violet mt-4"
+              >
+                Confirm
+              </button>
+            </form>
+          </div>
+        ) : (
+          <div className="mt-[50px] flex justify-center laptop:w-1/2 laptop:m-0">
+            <div className="flex flex-col h-[250px] items-center justify-between w-[90%] laptop:w-[70%]">
+              <img
+                className="w-[80px]"
+                src="/images/icon-complete.svg"
+                alt="centang"
+              />
+              <h1 className="text-[30px] font-semibold">THANK YOU</h1>
+              <p className="font-semibold text-gray-400">
+                We've added your card details
+              </p>
+              <button
+                onClick={submit}
+                className="w-full h-10 text-white bg-Very-dark-violet mt-4"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    </div>
+  );
 }
