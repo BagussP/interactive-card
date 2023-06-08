@@ -66,19 +66,19 @@ export default function Home() {
   };
 
   const submit = () => {
-    // if (inputName == false || inputName.charAt(0) == " " ) {
-    //   alert("Ga boleh kosong bro atau huruf depannya spasi");
-    // } else if (inputCardNumber.length < 16) {
-    //   alert("Panjang card numbernya harus 16 bro");
-    // } else if (selectedMonth == "") {
-    //   alert("Bulannya diisi dulu dong bro");
-    // } else if (selectedYear == "") {
-    //   alert("Tahunnya diisi dulu dong bro");
-    // } else if (inputCvc.length < 3) {
-    //   alert("Panjang cvcnya harus 3 bro");
-    // } else {
+    if (inputName == false || inputName.charAt(0) == " " ) {
+      alert("Ga boleh kosong bro atau huruf depannya spasi");
+    } else if (inputCardNumber.length < 16) {
+      alert("Panjang card numbernya harus 16 bro");
+    } else if (selectedMonth == "") {
+      alert("Bulannya diisi dulu dong bro");
+    } else if (selectedYear == "") {
+      alert("Tahunnya diisi dulu dong bro");
+    } else if (inputCvc.length < 3) {
+      alert("Panjang cvcnya harus 3 bro");
+    } else {
     setIsHidden(!isHidden);
-    // }
+    }
   };
 
   return (
